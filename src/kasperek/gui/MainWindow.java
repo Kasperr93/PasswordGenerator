@@ -5,7 +5,7 @@ import java.awt.*;
 
 /**
  * @author Tomasz Kasperek
- * @version 0.2 02/04/2019
+ * @version 0.3 02/04/2019
  * @since 0.1
  */
 
@@ -16,6 +16,11 @@ public class MainWindow {
     private JCheckBox numbersCheckBox;
     private JCheckBox specialCharactersCheckBox;
 
+    private JRadioButton smallLettersRadioButton;
+    private JRadioButton bigLettersRadioButton;
+    private JRadioButton smallAndBigLettersRadioButton;
+    private ButtonGroup radioButtonLettersGroup;
+
     /**
      * Default constructor. It is responsibility for setter all needed parameters for window. Also it is responsibility
      * for call some methods.
@@ -24,6 +29,7 @@ public class MainWindow {
     public MainWindow() {
         frame = new JFrame("Password Generator");
         panel = new JPanel();
+        radioButtonLettersGroup = new ButtonGroup();
 
         panel.setLayout(null);
         panel.setBackground(Color.DARK_GRAY);
@@ -58,7 +64,14 @@ public class MainWindow {
     private void initialization() {
         initializeNumbersCheckBox();
         initializeSpecialCharactersCheckBox();
+        initializeSmallLettersRadioButton();
+        initializeBigLettersRadioButton();
+        initializeSmallAndBigLettersRadioButton();
     }
+
+    /**
+     * The method is responsibility for creating checkbox to choose to create the password with numbers.
+     */
 
     private void initializeNumbersCheckBox() {
         numbersCheckBox = new JCheckBox("Use numbers");
@@ -70,6 +83,10 @@ public class MainWindow {
         panel.add(numbersCheckBox);
     }
 
+    /**
+     * The method is responsibility for creating checkbox to choose to create the password with special characters.
+     */
+
     private void initializeSpecialCharactersCheckBox() {
         specialCharactersCheckBox = new JCheckBox("Use special characters");
 
@@ -78,5 +95,52 @@ public class MainWindow {
         specialCharactersCheckBox.setVisible(true);
 
         panel.add(specialCharactersCheckBox);
+    }
+
+    /**
+     * The method is responsibility for creating radio button to choose to create the password with only small letters.
+     */
+
+    private void initializeSmallLettersRadioButton() {
+        smallLettersRadioButton = new JRadioButton("Use only small letters");
+
+        smallLettersRadioButton.setBounds(80, 175, 430, 20);
+        smallLettersRadioButton.setForeground(Color.LIGHT_GRAY);
+        smallLettersRadioButton.setSelected(true);
+        smallLettersRadioButton.setVisible(true);
+
+        radioButtonLettersGroup.add(smallLettersRadioButton);
+        panel.add(smallLettersRadioButton);
+    }
+
+    /**
+     * The method is responsibility for creating radio button to choose to create the password with only big letters.
+     */
+
+    private void initializeBigLettersRadioButton() {
+        bigLettersRadioButton = new JRadioButton("Use only big letters");
+
+        bigLettersRadioButton.setBounds(80, 200, 430, 20);
+        bigLettersRadioButton.setForeground(Color.LIGHT_GRAY);
+        bigLettersRadioButton.setVisible(true);
+
+        radioButtonLettersGroup.add(bigLettersRadioButton);
+        panel.add(bigLettersRadioButton);
+    }
+
+    /**
+     * The method is responsibility for creating radio button to choose to create the password with small
+     * and big letters.
+     */
+
+    private void initializeSmallAndBigLettersRadioButton() {
+        smallAndBigLettersRadioButton = new JRadioButton("Use small and big letters");
+
+        smallAndBigLettersRadioButton.setBounds(80, 225, 430, 20);
+        smallAndBigLettersRadioButton.setForeground(Color.LIGHT_GRAY);
+        smallAndBigLettersRadioButton.setVisible(true);
+
+        radioButtonLettersGroup.add(smallAndBigLettersRadioButton);
+        panel.add(smallAndBigLettersRadioButton);
     }
 }
