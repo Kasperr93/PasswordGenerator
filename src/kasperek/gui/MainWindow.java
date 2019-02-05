@@ -5,7 +5,7 @@ import java.awt.*;
 
 /**
  * @author Tomasz Kasperek
- * @version 0.4 02/04/2019
+ * @version 0.5 02/05/2019
  * @since 0.1
  */
 
@@ -29,6 +29,8 @@ public class MainWindow {
 
     private JSlider passwordLengthSlider;
     private JTextField generatedPasswordTextField;
+
+    private JButton generateButton;
 
     /**
      * Default constructor. It is responsibility for setter all needed parameters for window. Also it is responsibility
@@ -79,6 +81,7 @@ public class MainWindow {
         initializeSmallAndBigLettersRadioButton();
         initializePasswordLengthSlider();
         initializeGeneratedPasswordTextField();
+        initializeGenerateButton();
     }
 
     /**
@@ -213,5 +216,20 @@ public class MainWindow {
         generatedPasswordTextField.setVisible(true);
 
         panel.add(generatedPasswordTextField);
+    }
+
+    /**
+     * The method shows the button to generate a password.
+     */
+
+    private void initializeGenerateButton() {
+        generateButton = new JButton("Generate password");
+
+        generateButton.setBounds(100, 395, 200, 35);
+        generateButton.setBackground(Color.GRAY);
+        generateButton.setForeground(Color.DARK_GRAY);
+        generateButton.setVisible(true);
+
+        panel.add(generateButton);
     }
 }
