@@ -5,7 +5,7 @@ import java.awt.*;
 
 /**
  * @author Tomasz Kasperek
- * @version 0.3 02/04/2019
+ * @version 0.4 02/04/2019
  * @since 0.1
  */
 
@@ -20,6 +20,8 @@ public class MainWindow {
     private JRadioButton bigLettersRadioButton;
     private JRadioButton smallAndBigLettersRadioButton;
     private ButtonGroup radioButtonLettersGroup;
+
+    private JSlider passwordLengthSlider;
 
     /**
      * Default constructor. It is responsibility for setter all needed parameters for window. Also it is responsibility
@@ -67,6 +69,7 @@ public class MainWindow {
         initializeSmallLettersRadioButton();
         initializeBigLettersRadioButton();
         initializeSmallAndBigLettersRadioButton();
+        initializePasswordLengthSlider();
     }
 
     /**
@@ -142,5 +145,37 @@ public class MainWindow {
 
         radioButtonLettersGroup.add(smallAndBigLettersRadioButton);
         panel.add(smallAndBigLettersRadioButton);
+    }
+
+    /**
+     * The method is responsibility for password length via slider.
+     */
+
+    private void initializePasswordLengthSlider() {
+        passwordLengthSlider = new JSlider(8, 64, 16);
+        JLabel passwordLengthLabel = new JLabel("Password length");
+        JLabel lengthLabel = new JLabel(String.valueOf(passwordLengthSlider.getValue()));
+
+        passwordLengthSlider.setBounds(10, 280, 360, 20);
+        passwordLengthSlider.setPaintTicks(true);
+        passwordLengthSlider.setPaintLabels(true);
+        passwordLengthSlider.setMinorTickSpacing(8);
+        passwordLengthSlider.addChangeListener(e -> lengthLabel.setText(String.valueOf(passwordLengthSlider.getValue())));
+
+        passwordLengthSlider.setVisible(true);
+        panel.add(passwordLengthSlider);
+
+        passwordLengthLabel.setBounds(10, 255, 430, 20);
+        passwordLengthLabel.setForeground(Color.LIGHT_GRAY);
+
+        passwordLengthLabel.setVisible(true);
+        panel.add(passwordLengthLabel);
+
+
+        lengthLabel.setBounds(375, 275, 20, 20);
+        lengthLabel.setForeground(Color.LIGHT_GRAY);
+
+        lengthLabel.setVisible(true);
+        panel.add(lengthLabel);
     }
 }
