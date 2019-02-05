@@ -4,7 +4,7 @@ import java.util.Random;
 
 /**
  * @author Tomasz Kasperek
- * @version 0.1 02/05/2019
+ * @version 0.2 02/05/2019
  * @see kasperek.gui.MainWindow
  * @since 0.1
  */
@@ -26,5 +26,17 @@ public class PasswordGenerator {
         letters = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM";
         specialCharacters = "!@#$%^&*()_-+=,.<>?:;'\"[]{}`~";
         numbers = "0123456789";
+    }
+
+    private char generateLetter() {
+        return letters.charAt(random.nextInt(letters.length()));
+    }
+
+    private char generateNumber() {
+        return numbers.charAt(random.nextInt(numbers.length()));
+    }
+
+    private char generateSpecialCharacter() {
+        return specialCharacters.charAt(random.nextInt(specialCharacters.length()));
     }
 }
