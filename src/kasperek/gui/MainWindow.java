@@ -2,10 +2,12 @@ package kasperek.gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 /**
  * @author Tomasz Kasperek
- * @version 0.5 02/05/2019
+ * @version 1.0 02/05/2019
  * @since 0.1
  */
 
@@ -18,6 +20,8 @@ public class MainWindow {
     private final int ELEMENT_X_POSITION = 100;
 
     private JLabel titleLabel;
+    private JLabel passwordLengthLabel;
+    private JLabel lengthLabel;
 
     private JCheckBox numbersCheckBox;
     private JCheckBox specialCharactersCheckBox;
@@ -82,6 +86,7 @@ public class MainWindow {
         initializePasswordLengthSlider();
         initializeGeneratedPasswordTextField();
         initializeGenerateButton();
+        changeWindowTheme();
     }
 
     /**
@@ -179,8 +184,8 @@ public class MainWindow {
 
     private void initializePasswordLengthSlider() {
         passwordLengthSlider = new JSlider(8, 64, 16);
-        JLabel passwordLengthLabel = new JLabel("Password length");
-        JLabel lengthLabel = new JLabel(String.valueOf(passwordLengthSlider.getValue()));
+        passwordLengthLabel = new JLabel("Password length");
+        lengthLabel = new JLabel(String.valueOf(passwordLengthSlider.getValue()));
 
         passwordLengthSlider.setBounds(10, 285, 360, ELEMENT_HEIGHT);
         passwordLengthSlider.setPaintTicks(true);
@@ -226,10 +231,57 @@ public class MainWindow {
         generateButton = new JButton("Generate password");
 
         generateButton.setBounds(100, 395, 200, 35);
-        generateButton.setBackground(Color.GRAY);
         generateButton.setForeground(Color.DARK_GRAY);
         generateButton.setVisible(true);
 
         panel.add(generateButton);
+    }
+
+    /**
+     * The method responsibility for the change theme color.
+     */
+
+    private void changeWindowTheme() {
+        JToggleButton toggleButton = new JToggleButton("Change to light theme");
+
+        ItemListener itemListener = itemEvent -> {
+            int state = itemEvent.getStateChange();
+
+            if (state == ItemEvent.SELECTED) {
+                toggleButton.setText("Change to dark theme");
+                frame.setBackground(Color.LIGHT_GRAY);
+                panel.setBackground(Color.LIGHT_GRAY);
+                titleLabel.setForeground(Color.DARK_GRAY);
+                numbersCheckBox.setForeground(Color.DARK_GRAY);
+                specialCharactersCheckBox.setForeground(Color.DARK_GRAY);
+                smallLettersRadioButton.setForeground(Color.DARK_GRAY);
+                bigLettersRadioButton.setForeground(Color.DARK_GRAY);
+                smallAndBigLettersRadioButton.setForeground(Color.DARK_GRAY);
+                passwordLengthLabel.setForeground(Color.DARK_GRAY);
+                lengthLabel.setForeground(Color.DARK_GRAY);
+                generatedPasswordTextField.setForeground(Color.LIGHT_GRAY);
+                generatedPasswordTextField.setBackground(Color.GRAY);
+            } else {
+                toggleButton.setText("Change to light theme");
+                frame.setBackground(Color.DARK_GRAY);
+                panel.setBackground(Color.DARK_GRAY);
+                titleLabel.setForeground(Color.LIGHT_GRAY);
+                numbersCheckBox.setForeground(Color.LIGHT_GRAY);
+                specialCharactersCheckBox.setForeground(Color.LIGHT_GRAY);
+                smallLettersRadioButton.setForeground(Color.LIGHT_GRAY);
+                bigLettersRadioButton.setForeground(Color.LIGHT_GRAY);
+                smallAndBigLettersRadioButton.setForeground(Color.LIGHT_GRAY);
+                passwordLengthLabel.setForeground(Color.LIGHT_GRAY);
+                lengthLabel.setForeground(Color.LIGHT_GRAY);
+                generatedPasswordTextField.setBackground(Color.LIGHT_GRAY);
+                generatedPasswordTextField.setForeground(Color.DARK_GRAY);
+            }
+        };
+
+        toggleButton.setBounds(10, 550, 200, 20);
+        toggleButton.addItemListener(itemListener);
+        toggleButton.setVisible(true);
+
+        panel.add(toggleButton);
     }
 }
