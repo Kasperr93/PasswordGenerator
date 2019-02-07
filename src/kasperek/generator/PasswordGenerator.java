@@ -4,7 +4,7 @@ import java.util.Random;
 
 /**
  * @author Tomasz Kasperek
- * @version 0.3 02/07/2019
+ * @version 0.4 02/07/2019
  * @see kasperek.gui.MainWindow
  * @since 0.1
  */
@@ -43,7 +43,7 @@ public class PasswordGenerator {
         StringBuilder generatedPassword = new StringBuilder();
         int number;
 
-        for (int i = length; i < 0; i--) {
+        for (int i = length; i > 0; i--) {
             number = random.nextInt(100);
 
             if (number >= 0 && number < 25 && useNumbers) {
