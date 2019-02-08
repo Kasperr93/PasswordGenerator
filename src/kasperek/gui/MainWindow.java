@@ -1,5 +1,7 @@
 package kasperek.gui;
 
+import kasperek.generator.PasswordGenerator;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ItemEvent;
@@ -7,7 +9,8 @@ import java.awt.event.ItemListener;
 
 /**
  * @author Tomasz Kasperek
- * @version 1.0 02/05/2019
+ * @version 1.1 02/07/2019
+ * @see kasperek.generator.PasswordGenerator
  * @since 0.1
  */
 
@@ -34,7 +37,7 @@ public class MainWindow {
     private JSlider passwordLengthSlider;
     private JTextField generatedPasswordTextField;
 
-    private JButton generateButton;
+    private PasswordGenerator passwordGenerator;
 
     /**
      * Default constructor. It is responsibility for setter all needed parameters for window. Also it is responsibility
@@ -45,6 +48,7 @@ public class MainWindow {
         frame = new JFrame("Password Generator");
         panel = new JPanel();
         radioButtonLettersGroup = new ButtonGroup();
+        passwordGenerator = new PasswordGenerator();
 
         panel.setLayout(null);
         panel.setBackground(Color.DARK_GRAY);
@@ -216,7 +220,7 @@ public class MainWindow {
 
         generatedPasswordTextField.setBounds(10, 360, 380, ELEMENT_HEIGHT);
         generatedPasswordTextField.setBackground(Color.LIGHT_GRAY);
-        generatedPasswordTextField.setForeground(Color.WHITE);
+        generatedPasswordTextField.setForeground(Color.DARK_GRAY);
         generatedPasswordTextField.setEditable(false);
         generatedPasswordTextField.setVisible(true);
 
@@ -228,10 +232,17 @@ public class MainWindow {
      */
 
     private void initializeGenerateButton() {
-        generateButton = new JButton("Generate password");
+        JButton generateButton = new JButton("Generate password");
 
         generateButton.setBounds(100, 395, 200, 35);
         generateButton.setForeground(Color.DARK_GRAY);
+        generateButton.addActionListener(e -> {
+            String password = passwordGenerator.generatedPassword(numbersCheckBox.isSelected(),
+                    specialCharactersCheckBox.isSelected(), smallLettersRadioButton.isSelected(),
+                    bigLettersRadioButton.isSelected(), passwordLengthSlider.getValue());
+
+            generatedPasswordTextField.setText(password);
+        });
         generateButton.setVisible(true);
 
         panel.add(generateButton);
@@ -259,8 +270,8 @@ public class MainWindow {
                 smallAndBigLettersRadioButton.setForeground(Color.DARK_GRAY);
                 passwordLengthLabel.setForeground(Color.DARK_GRAY);
                 lengthLabel.setForeground(Color.DARK_GRAY);
-                generatedPasswordTextField.setForeground(Color.LIGHT_GRAY);
                 generatedPasswordTextField.setBackground(Color.GRAY);
+                generatedPasswordTextField.setForeground(Color.LIGHT_GRAY);
             } else {
                 toggleButton.setText("Change to light theme");
                 frame.setBackground(Color.DARK_GRAY);
