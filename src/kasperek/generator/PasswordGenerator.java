@@ -4,7 +4,7 @@ import java.util.Random;
 
 /**
  * @author Tomasz Kasperek
- * @version 1.0 02/08/2019
+ * @version 1.1 02/08/2019
  * @see kasperek.gui.MainWindow
  * @since 0.1
  */
@@ -100,10 +100,12 @@ public class PasswordGenerator {
      */
 
     private String addNumbersToPassword(StringBuilder password, int length) {
+        int minValue = 1;
+        int range = length - minValue + 1;
         int x;
 
         for (int i = 1; i < length / 2; i++) {
-            x = random.nextInt(length);
+            x = (int)(Math.random() * range) + minValue;
             password.replace(x, x + 1, String.valueOf(generateNumber()));
         }
 
@@ -119,10 +121,12 @@ public class PasswordGenerator {
      */
 
     private String addSpecialCharactersToPassword(StringBuilder password, int length) {
+        int minValue = 1;
+        int range = length - minValue + 1;
         int x;
 
         for (int i = 1; i < length / 2; i++) {
-            x = random.nextInt(length);
+            x = (int)(Math.random() * range) + minValue;
             password.replace(x, x + 1, String.valueOf(generateSpecialCharacter()));
         }
 
@@ -139,15 +143,17 @@ public class PasswordGenerator {
      */
 
     private String addNumbersAndSpecialCharactersToPassword(StringBuilder password, int length) {
+        int minValue = 1;
+        int range = length - minValue + 1;
         int x;
         int y;
 
-        for (int i = 1; i < length / 2; i++) {
-            y = random.nextInt(length);
-            x = random.nextInt(length);
+        for (int i = 0; i < length / 2; i++) {
+            y = (int)(Math.random() * range) + minValue;
+            x = (int)(Math.random() * range) + minValue;
 
             while (x == y)
-                x = random.nextInt(length);
+                x = (int)(Math.random() * range) + minValue;
 
             password.replace(x, x + 1, String.valueOf(generateNumber()));
             password.replace(y, y + 1, String.valueOf(generateSpecialCharacter()));
