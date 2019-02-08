@@ -13,7 +13,7 @@ import java.awt.event.MouseListener;
 
 /**
  * @author Tomasz Kasperek
- * @version 1.2 02/08/2019
+ * @version 1.3 02/08/2019
  * @see kasperek.generator.PasswordGenerator
  * @since 0.1
  */
@@ -234,6 +234,8 @@ public class MainWindow {
                 Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 
                 clipboard.setContents(stringSelection, null);
+
+                popUpNotificationCopiedToClipboard();
             }
 
             @Override
@@ -324,5 +326,30 @@ public class MainWindow {
         toggleButton.setVisible(true);
 
         panel.add(toggleButton);
+    }
+
+    /**
+     * The method shows notification about copied password to clipboard, next the notification will be closed
+     * after 1.5 seconds.
+     */
+
+    private void popUpNotificationCopiedToClipboard() {
+        JOptionPane notification = new JOptionPane("Copied to clipboard", JOptionPane.PLAIN_MESSAGE,
+                JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
+        JDialog dialog = notification.createDialog(null, "Success!");
+
+        dialog.setAlwaysOnTop(true);
+        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+
+        new Thread(() -> {
+            try {
+                Thread.sleep(1500);
+                dialog.dispose();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
+
+        dialog.setVisible(true);
     }
 }
