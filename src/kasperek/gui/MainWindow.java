@@ -4,12 +4,16 @@ import kasperek.generator.PasswordGenerator;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 /**
  * @author Tomasz Kasperek
- * @version 1.1 02/07/2019
+ * @version 1.2 02/08/2019
  * @see kasperek.generator.PasswordGenerator
  * @since 0.1
  */
@@ -212,7 +216,8 @@ public class MainWindow {
     }
 
     /**
-     * The method shows the text field with the generated password.
+     * The method shows the text field with the generated password. After the click in text field, the password will
+     * be copied to clipboard.
      */
 
     private void initializeGeneratedPasswordTextField() {
@@ -222,6 +227,31 @@ public class MainWindow {
         generatedPasswordTextField.setBackground(Color.LIGHT_GRAY);
         generatedPasswordTextField.setForeground(Color.DARK_GRAY);
         generatedPasswordTextField.setEditable(false);
+        generatedPasswordTextField.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                StringSelection stringSelection = new StringSelection(generatedPasswordTextField.getText());
+                Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+
+                clipboard.setContents(stringSelection, null);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
         generatedPasswordTextField.setVisible(true);
 
         panel.add(generatedPasswordTextField);
