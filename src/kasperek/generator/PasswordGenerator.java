@@ -4,7 +4,7 @@ import java.util.Random;
 
 /**
  * @author Tomasz Kasperek
- * @version 0.4 02/07/2019
+ * @version 1.0 02/08/2019
  * @see kasperek.gui.MainWindow
  * @since 0.1
  */
@@ -24,7 +24,7 @@ public class PasswordGenerator {
         random = new Random();
 
         letters = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM";
-        specialCharacters = "!@#$%^&*()_-+=,.<>?:;'\"[]{}`~";
+        specialCharacters = "!@#$%^&*()_+=,.<>?:;'[]{}`~";
         numbers = "0123456789";
     }
 
@@ -41,27 +41,24 @@ public class PasswordGenerator {
 
     public String generatedPassword(boolean useNumbers, boolean useSpecialCharacters, boolean useSmallLetters, boolean useBigLetters, int length) {
         StringBuilder generatedPassword = new StringBuilder();
-        int number;
 
         for (int i = length; i > 0; i--) {
-            number = random.nextInt(100);
-
-            if (number >= 0 && number < 25 && useNumbers) {
-                generatedPassword.append(generateNumber());
-            } else if (number >= 25 && number < 40 && useSpecialCharacters) {
-                generatedPassword.append(generateSpecialCharacter());
-            } else {
-                generatedPassword.append(generateLetter());
-            }
+            generatedPassword.append(generateLetter());
         }
 
-        if (useSmallLetters) {
-            return generatedPassword.toString().toLowerCase();
-        } else if (useBigLetters) {
-            return generatedPassword.toString().toUpperCase();
-        } else {
-            return generatedPassword.toString();
-        }
+        if (useNumbers && useSpecialCharacters)
+            generatedPassword.replace(0, length + 1, addNumbersAndSpecialCharactersToPassword(generatedPassword, length));
+        else if (useNumbers)
+            generatedPassword.replace(0, length + 1, addNumbersToPassword(generatedPassword, length));
+        else if (useSpecialCharacters)
+            generatedPassword.replace(0, length + 1, addSpecialCharactersToPassword(generatedPassword, length));
+
+        if (useSmallLetters)
+            generatedPassword.replace(0, length + 1, generatedPassword.toString().toLowerCase());
+        else if (useBigLetters)
+            generatedPassword.replace(0, length + 1, generatedPassword.toString().toUpperCase());
+
+        return generatedPassword.toString();
     }
 
     /**
@@ -92,5 +89,70 @@ public class PasswordGenerator {
 
     private char generateSpecialCharacter() {
         return specialCharacters.charAt(random.nextInt(specialCharacters.length()));
+    }
+
+    /**
+     * The method add to password some numbers (if the user want to have numbers in password).
+     *
+     * @param password the generated password.
+     * @param length   the password length.
+     * @return the password with numbers.
+     */
+
+    private String addNumbersToPassword(StringBuilder password, int length) {
+        int x;
+
+        for (int i = 1; i < length / 2; i++) {
+            x = random.nextInt(length);
+            password.replace(x, x + 1, String.valueOf(generateNumber()));
+        }
+
+        return password.toString();
+    }
+
+    /**
+     * The method add to password some special characters (if the user want to have special characters in password).
+     *
+     * @param password the generated password.
+     * @param length   the password length.
+     * @return the password with special characters.
+     */
+
+    private String addSpecialCharactersToPassword(StringBuilder password, int length) {
+        int x;
+
+        for (int i = 1; i < length / 2; i++) {
+            x = random.nextInt(length);
+            password.replace(x, x + 1, String.valueOf(generateSpecialCharacter()));
+        }
+
+        return password.toString();
+    }
+
+    /**
+     * The method add to password some numbers and special characters
+     * (if the user want to have numbers and special characters in password).
+     *
+     * @param password the generated password.
+     * @param length   the password length.
+     * @return the password with numbers and special characters.
+     */
+
+    private String addNumbersAndSpecialCharactersToPassword(StringBuilder password, int length) {
+        int x;
+        int y;
+
+        for (int i = 1; i < length / 2; i++) {
+            y = random.nextInt(length);
+            x = random.nextInt(length);
+
+            while (x == y)
+                x = random.nextInt(length);
+
+            password.replace(x, x + 1, String.valueOf(generateNumber()));
+            password.replace(y, y + 1, String.valueOf(generateSpecialCharacter()));
+        }
+
+        return password.toString();
     }
 }
