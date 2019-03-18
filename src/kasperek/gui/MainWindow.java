@@ -13,7 +13,7 @@ import java.awt.event.MouseListener;
 
 /**
  * @author Tomasz Kasperek
- * @version 1.3 02/08/2019
+ * @version 1.3.1 03/18/2019
  * @see kasperek.generator.PasswordGenerator
  * @since 0.1
  */
@@ -21,6 +21,8 @@ import java.awt.event.MouseListener;
 public class MainWindow {
     private JFrame frame;
     private JPanel panel;
+
+    private int colorTheme;
 
     private final int ELEMENT_HEIGHT = 20;
     private final int ELEMENT_WIDTH = 430;
@@ -288,9 +290,9 @@ public class MainWindow {
         JToggleButton toggleButton = new JToggleButton("Change to light theme");
 
         ItemListener itemListener = itemEvent -> {
-            int state = itemEvent.getStateChange();
+            colorTheme = itemEvent.getStateChange();
 
-            if (state == ItemEvent.SELECTED) {
+            if (colorTheme == ItemEvent.SELECTED) {
                 toggleButton.setText("Change to dark theme");
                 frame.setBackground(Color.LIGHT_GRAY);
                 panel.setBackground(Color.LIGHT_GRAY);
@@ -334,6 +336,16 @@ public class MainWindow {
      */
 
     private void popUpNotificationCopiedToClipboard() {
+        if (colorTheme == ItemEvent.SELECTED) {
+            UIManager.put("Panel.background", Color.LIGHT_GRAY);
+            UIManager.put("OptionPane.background", Color.LIGHT_GRAY);
+            UIManager.put("OptionPane.messageForeground", Color.DARK_GRAY);
+        } else {
+            UIManager.put("Panel.background", Color.DARK_GRAY);
+            UIManager.put("OptionPane.background", Color.DARK_GRAY);
+            UIManager.put("OptionPane.messageForeground", Color.LIGHT_GRAY);
+        }
+
         JOptionPane notification = new JOptionPane("Copied to clipboard", JOptionPane.PLAIN_MESSAGE,
                 JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
         JDialog dialog = notification.createDialog(null, "Success!");
